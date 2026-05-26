@@ -1,8 +1,96 @@
 doctype html
+// TODO: Heapsort, LSD/MSD Radix Sort
 html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        title Document
+        script(src="scripts/index.js", defer, type="module")
+        link(rel="stylesheet", href="styles/index.css")
+        title Sortipedia
     body
-        p This is just a template.
+        button.small_screen.controller(data-control="control_box")
+            <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 7L4 7" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M20 12L4 12" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M20 17L4 17" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        .canvas-container
+            canvas#canvas
+        .controls(data-controlled="control_box")
+            h1 Sortipedia
+            p An abridged encyclopedia and visualizer of sorting algorithms, inspired by the Sound of Sorting.
+            hr
+            h2 Config
+            label.full-width
+                p Sorting algorithm
+                select#algorithm.full-width
+                    option(value="bubble") Bubble Sort
+                    option(value="selection") Selection Sort
+                    option(value="insertion") Insertion Sort
+                    option(value="merge") Merge Sort
+                    option(value="quick") Quick Sort
+                    option(value="bogo") Bogo Sort
+            label.full-width
+                p Number of elements
+                input#num-elements.full-width(type="number", min="4", max="2048", value="100")
+            label.full-width
+                p Sorting delay (ms)
+                input#sorting-delay.full-width(type="number", min="0", max="1000", value="1")
+            hr
+            .buttons
+                button#play.control(data-disabledBy="play")
+                    | Play
+                button#pause.control(disabled, data-disabledBy="pause,step,reset")
+                    | Pause
+                button#step.control(data-disabledBy="play")
+                    | Step
+                button#reset.control(data-disabledBy="play")
+                    | Reset
+            hr
+            h2 Statistics
+            ul
+                li Array reads:&nbsp;
+                    span.stats(data-stat="arrayRead") 0
+                li Array writes:&nbsp;
+                    span.stats(data-stat="arrayWrite") 0
+                li Array comparisons:&nbsp;
+                    span.stats(data-stat="arrayComparison") 0
+            hr
+            h2 Infos
+            span.stats(data-info="description")
+            ul
+                li Time complexity:
+                    ul
+                        li Best:&nbsp;
+                            | O(
+                            span.stats(data-info="timeComplexity_best")
+                            | )
+                        li Worst:&nbsp;
+                            | O(
+                            span.stats(data-info="timeComplexity_worst")
+                            | )
+                        li Average:&nbsp;
+                            | O(
+                            span.stats(data-info="timeComplexity_average")
+                            | )
+                li Space complexity:&nbsp;
+                    | O(
+                    span.stats(data-info="spaceComplexity")
+                    | )
+                li Stable:&nbsp;
+                    span.stats(data-info="stable")
+                li In-place:&nbsp;
+                    span.stats(data-info="inPlace")
+                li Read more at:
+                    ul#readMore
+            hr
+            h2 Legends
+            p Each operation on the blocks are marked by colors listed below
+            p #[.legends.read] Items getting read
+            p #[.legends.write] Items getting written
+            p #[.legends.swap] Items getting swapped
+            p #[.legends.compare] Items getting compared
+            hr
+            h2 About
+            p Created out of boredom and my love for DSA along with Programming Methodology. Not the fastest simulation out there, but not too slow!
+            p 2026 sudoker0, released under MIT license.

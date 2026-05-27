@@ -89,4 +89,19 @@ export const data = {
             Wikipedia: "https://en.wikipedia.org/wiki/Quicksort",
         },
     },
+    heap_sort: {
+        time_complexity: {
+            best: "n log n",
+            average: "n log n",
+            worst: "n log n",
+        },
+        space_complexity: "1",
+        stable: false,
+        in_place: true,
+        description:
+            "Uses a max-heap to re-order elements by applying heapify on the array, then perform an extract-max on the build max-heap tree, then repeat while ignoring the extracted elements. Guarantees O(n log n) runtime with constant O(1) memory.",
+        read_more: {
+            Wikipedia: "https://en.wikipedia.org/wiki/Heapsort",
+        },
+    },
 } as const;

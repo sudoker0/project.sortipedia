@@ -80,5 +80,16 @@ export abstract class SortingAlgorithm {
         }
         return result;
     }
+
+    nextBatch(n: number): Action[] {
+        const actions: Action[] = [];
+        for (let i = 0; i < n; i++) {
+            if (this.finished) break;
+            const { value, done } = this.next();
+            if (done || !value) break;
+            actions.push(value);
+        }
+        return actions;
+    }
     protected abstract sort(): Generator<Action, void, undefined>;
 }

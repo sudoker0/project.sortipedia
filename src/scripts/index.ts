@@ -7,6 +7,7 @@ import { QuickSort } from "./algos/quicksort.js";
 import { BogoSort } from "./algos/bogo_sort.js";
 
 import { data as Description } from "../data/description.js";
+import { HeapSort } from "./algos/heap_sort.js";
 
 const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d");
@@ -113,39 +114,59 @@ function clearCanvas() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-function drawBlocks(data: number[], action: Action | void) {
+function drawBlocks(data: number[], actions: Action[] | void) {
     if (!ctx) return;
     clearCanvas();
     const blockWidth = canvas.width / data.length;
     const maxHeight = data.reduce((accum, cur) => Math.max(accum, cur), 0);
+    const processLater = new Set<number>();
+    if (actions) {
+        for (const action of actions) {
+            processLater.add(action.idx);
+            processLater.add(action.idx2);
+        }
+    }
     for (let i = 0; i < data.length; i++) {
+        if (processLater.has(i)) continue;
         const normalizedHeight = data[i] / maxHeight;
         const blockHeight = normalizedHeight * canvas.height;
         ctx.fillStyle = "white";
-        if (action) {
-            switch (action.type) {
-                case "compare":
-                    if (action.idx == i || action.idx2 == i)
-                        ctx.fillStyle = color.compare;
-                    break;
-                case "swap":
-                    if (action.idx == i || action.idx2 == i)
-                        ctx.fillStyle = color.swap;
-                    break;
-                case "write":
-                    if (action.idx == i) ctx.fillStyle = color.write;
-                    break;
-                case "read":
-                    if (action.idx == i) ctx.fillStyle = color.read;
-                    break;
-            }
-        }
         ctx.fillRect(
             i * blockWidth,
             canvas.height - blockHeight,
             blockWidth,
             blockHeight,
         );
+    }
+    if (actions) {
+        for (const action of actions) {
+            switch (action.type) {
+                case "compare":
+                    ctx.fillStyle = color.compare;
+                    break;
+                case "swap":
+                    ctx.fillStyle = color.swap;
+                    break;
+                case "write":
+                    ctx.fillStyle = color.write;
+                    break;
+                case "read":
+                    ctx.fillStyle = color.read;
+                    break;
+            }
+            const indexes: number[] = [action.idx];
+            if (action.idx2) indexes.push(action.idx2);
+            for (const i of indexes) {
+                const normalizedHeight = data[i] / maxHeight;
+                const blockHeight = normalizedHeight * canvas.height;
+                ctx.fillRect(
+                    i * blockWidth,
+                    canvas.height - blockHeight,
+                    blockWidth,
+                    blockHeight,
+                );
+            }
+        }
     }
 }
 
@@ -181,6 +202,8 @@ function updateDescription() {
         case "bogo":
             key = "bogo_sort";
             break;
+        case "heap":
+            key = "heap_sort";
         default:
             break;
     }
@@ -213,6 +236,9 @@ function updateAlgorithm() {
             break;
         case "bogo":
             sorter = new BogoSort(curArray);
+            break;
+        case "heap":
+            sorter = new HeapSort(curArray);
             break;
         default:
             break;
@@ -300,14 +326,16 @@ function runSort(timestamp: DOMHighResTimeStamp | undefined = undefined) {
         startTimestamp = timestamp;
     }
     const elapsed = timestamp - startTimestamp;
-    if (elapsed >= config.delay || timestamp == undefined) {
+    if (timestamp == undefined || elapsed >= config.delay) {
         startTimestamp = timestamp;
-        const { value: action, done } = sorter.next();
-        if (done) {
+        let batchCount = 10;
+        if (timestamp == undefined) batchCount = 1;
+        const batchAction = sorter.nextBatch(batchCount);
+        if (batchAction.length == 0) {
             finish();
             return;
         }
-        if (action) {
+        for (const action of batchAction) {
             switch (action.type) {
                 case "swap":
                     state.arrayRead += 2;
@@ -325,7 +353,7 @@ function runSort(timestamp: DOMHighResTimeStamp | undefined = undefined) {
             }
         }
         writeStatsToScreen();
-        drawBlocks(sorter.readData, action);
+        drawBlocks(sorter.readData, batchAction);
     }
     if (timestamp != undefined) {
         globalAnimationFrame = requestAnimationFrame(runSort);
@@ -333,6 +361,7 @@ function runSort(timestamp: DOMHighResTimeStamp | undefined = undefined) {
 }
 
 playBtn.addEventListener("click", () => {
+    startTimestamp = undefined;
     globalAnimationFrame = requestAnimationFrame(runSort);
 });
 pauseBtn.addEventListener("click", () => {

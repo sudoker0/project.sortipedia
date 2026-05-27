@@ -8,6 +8,8 @@ import { BogoSort } from "./algos/bogo_sort.js";
 import { HeapSort } from "./algos/heap_sort.js";
 import { validateAndReturn } from "./ui.js";
 import { MiracleSort } from "./algos/miracle_sort.js";
+import { Introsort } from "./algos/introsort.js";
+import { GnomeSort } from "./algos/gnome_sort.js";
 
 export const config = {
     delay: 0,
@@ -21,7 +23,7 @@ export let startTimestamp: DOMHighResTimeStamp | undefined = undefined;
 export let globalAnimationFrame: number = 0;
 
 export function createShuffledList(n: number): number[] {
-    const arr = Array.from({ length: n + 1 }, (_, i) => i + 1);
+    const arr = Array.from({ length: n }, (_, i) => i + 1);
 
     for (let i = arr.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -33,28 +35,34 @@ export function createShuffledList(n: number): number[] {
 
 export function updateAlgorithm(algorithmValue: string) {
     switch (algorithmValue) {
-        case "bubble":
+        case "bubble_sort":
             sorter = new BubbleSort(curArray);
             break;
-        case "selection":
+        case "selection_sort":
             sorter = new SelectionSort(curArray);
             break;
-        case "insertion":
+        case "insertion_sort":
             sorter = new InsertionSort(curArray);
             break;
-        case "merge":
+        case "gnome_sort":
+            sorter = new GnomeSort(curArray);
+            break;
+        case "merge_sort":
             sorter = new MergeSort(curArray);
             break;
-        case "quick":
+        case "quick_sort":
             sorter = new QuickSort(curArray);
             break;
-        case "bogo":
-            sorter = new BogoSort(curArray);
+        case "intro_sort":
+            sorter = new Introsort(curArray);
             break;
-        case "heap":
+        case "heap_sort":
             sorter = new HeapSort(curArray);
             break;
-        case "miracle":
+        case "bogo_sort":
+            sorter = new BogoSort(curArray);
+            break;
+        case "miracle_sort":
             sorter = new MiracleSort(curArray);
             break;
         default:

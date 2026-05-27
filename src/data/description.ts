@@ -1,4 +1,4 @@
-type Data = {
+export type Data = {
     [sorting_algo: string]: {
         time_complexity: {
             best: string;
@@ -128,12 +128,42 @@ export const data: Data = {
             worst: "unbounded",
         },
         space_complexity: "1",
-        stable: true,
+        stable: false,
         in_place: true,
         description:
             "A sorting algorithm that waits for a miracle to happen. A purely joke algorithm.",
         read_more: {
             Sortpedia: "https://www.sortpedia.com/library/miracle-sort",
+        },
+    },
+    intro_sort: {
+        time_complexity: {
+            best: "n log n",
+            average: "n log n",
+            worst: "n log n",
+        },
+        space_complexity: "log n",
+        stable: false,
+        in_place: true,
+        description:
+            "A hybrid sorting algorithm that uses quicksort, heapsort, and insertion sort to achieve O(n log n) average and worst performance. Used in several standard libraries.",
+        read_more: {
+            Wikipedia: "https://en.wikipedia.org/wiki/Introsort",
+        },
+    },
+    gnome_sort: {
+        time_complexity: {
+            best: "n",
+            average: "n^2",
+            worst: "n^2",
+        },
+        space_complexity: "1",
+        stable: true,
+        in_place: true,
+        description:
+            "A variation of Insertion sort that does not use nested loops. Average running time is O(n^2) but tends torwards O(n) if the list is almost sorted.",
+        read_more: {
+            Wikipedia: "https://en.wikipedia.org/wiki/Gnome_sort",
         },
     },
 } as const;

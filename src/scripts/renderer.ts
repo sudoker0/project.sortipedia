@@ -1,3 +1,5 @@
+import { Action } from "./algos/base";
+
 export const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 export const ctx = canvas.getContext("2d");
 
@@ -15,7 +17,7 @@ export function clearCanvas() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-export function drawBlocks(data: number[], actions?: any[]) {
+export function drawBlocks(data: number[], actions?: Action[]) {
     if (!ctx) return;
     clearCanvas();
     const blockWidth = canvas.width / data.length;

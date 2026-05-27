@@ -1,4 +1,4 @@
-import { data as Description } from "../data/description.js";
+import { Data, data as Description } from "../data/description.js";
 
 export const info = {
     description: "",
@@ -115,34 +115,11 @@ export function clearStats() {
 }
 
 export function updateDescription(algorithmValue: string) {
-    let key: keyof typeof Description;
-    switch (algorithmValue) {
-        case "bubble":
-            key = "bubble_sort";
-            break;
-        case "selection":
-            key = "selection_sort";
-            break;
-        case "insertion":
-            key = "insertion_sort";
-            break;
-        case "merge":
-            key = "merge_sort";
-            break;
-        case "quick":
-            key = "quick_sort";
-            break;
-        case "bogo":
-            key = "bogo_sort";
-            break;
-        case "heap":
-            key = "heap_sort";
-            break;
-        case "miracle":
-            key = "miracle_sort";
-            break;
-        default:
-            return;
+    let key: keyof Data;
+    if (algorithmValue in Description) {
+        key = algorithmValue as keyof Data;
+    } else {
+        return;
     }
     info.timeComplexity_worst = Description[key].time_complexity.worst;
     info.timeComplexity_best = Description[key].time_complexity.best;

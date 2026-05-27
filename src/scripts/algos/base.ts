@@ -1,5 +1,5 @@
 export type Action = {
-    type: "swap" | "write" | "read" | "compare";
+    type: "swap" | "write" | "read" | "compare" | "nothing";
     data: number | null;
     idx: number;
     idx2: number | null;

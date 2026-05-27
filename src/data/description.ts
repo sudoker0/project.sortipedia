@@ -1,4 +1,21 @@
-export const data = {
+type Data = {
+    [sorting_algo: string]: {
+        time_complexity: {
+            best: string;
+            average: string;
+            worst: string;
+        };
+        space_complexity: string;
+        stable: boolean;
+        in_place: boolean;
+        description: string;
+        read_more: {
+            [source: string]: string;
+        };
+    };
+};
+
+export const data: Data = {
     selection_sort: {
         time_complexity: {
             best: "n^2",
@@ -102,6 +119,21 @@ export const data = {
             "Uses a max-heap to re-order elements by applying heapify on the array, then perform an extract-max on the build max-heap tree, then repeat while ignoring the extracted elements. Guarantees O(n log n) runtime with constant O(1) memory.",
         read_more: {
             Wikipedia: "https://en.wikipedia.org/wiki/Heapsort",
+        },
+    },
+    miracle_sort: {
+        time_complexity: {
+            best: "n",
+            average: "unbounded",
+            worst: "unbounded",
+        },
+        space_complexity: "1",
+        stable: true,
+        in_place: true,
+        description:
+            "A sorting algorithm that waits for a miracle to happen. A purely joke algorithm.",
+        read_more: {
+            Sortpedia: "https://www.sortpedia.com/library/miracle-sort",
         },
     },
 } as const;

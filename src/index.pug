@@ -31,21 +31,13 @@ html(lang="en")
                     option(value="quick") Quick Sort
                     option(value="heap") Heapsort
                     option(value="bogo") Bogo Sort
+                    option(value="miracle") Miracle Sort
             label.full-width
                 p Number of elements
                 input#num-elements.full-width(type="number", min="4", max="2048", value="100")
             label.full-width
                 p Sorting delay (ms)
                 input#sorting-delay.full-width(type="number", min="0", max="1000", value="1")
-            hr
-            label.full-width
-                p Sounds
-                select#sounds.full-width
-                    option(value="none") None
-                    option(value="sine-wave") Sine Wave
-            label.full-width
-                p Volume
-                input#volume.full-width(type="range", min="0", max="1", step="0.01", value="1")
             hr
             .buttons
                 button#play.control(data-disabledBy="play")

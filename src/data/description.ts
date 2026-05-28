@@ -166,4 +166,34 @@ export const data: Data = {
             Wikipedia: "https://en.wikipedia.org/wiki/Gnome_sort",
         },
     },
+    comb_sort: {
+        time_complexity: {
+            best: "n log n",
+            average: "n^2",
+            worst: "n^2",
+        },
+        space_complexity: "1",
+        stable: false,
+        in_place: true,
+        description:
+            "An improved version of Bubble Sort that uses a gap sequence to improve performance.",
+        read_more: {
+            Wikipedia: "https://en.wikipedia.org/wiki/Comb_sort",
+        },
+    },
+    radix_sort_lsd: {
+        time_complexity: {
+            best: "n * k / d",
+            average: "n * k / d",
+            worst: "n * k / d",
+        },
+        space_complexity: "n + 2 ^ d",
+        stable: true,
+        in_place: false,
+        description:
+            "A non-comparative sorting algorithm that sorts integers by creating and distributing them into buckets based on their radix. This version process the digits starting from the least significant digit (LSD).",
+        read_more: {
+            Wikipedia: "https://en.wikipedia.org/wiki/Radix_sort",
+        },
+    },
 } as const;

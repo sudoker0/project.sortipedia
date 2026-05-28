@@ -31,7 +31,9 @@ html(lang="en")
                     option(value="merge_sort") Merge Sort
                     option(value="quick_sort") Quicksort
                     option(value="heap_sort") Heapsort
+                    option(value="comb_sort") Comb Sort
                     option(value="intro_sort") Introsort
+                    option(value="radix_sort_lsd") Radix Sort (LSD)
                     option(value="bogo_sort") Bogo Sort
                     option(value="miracle_sort") Miracle Sort
             label.full-width
@@ -39,17 +41,19 @@ html(lang="en")
                 input#num-elements.full-width(type="number", min="4", max="2048", value="100")
             label.full-width
                 p Sorting delay (ms)
-                input#sorting-delay.full-width(type="number", min="0", max="1000", value="1")
+                input#sorting-delay.full-width(type="number", min="0", max="1000", value="10")
             hr
             .buttons
-                button#play.control(data-disabledBy="play")
+                button#play.control(data-disabledBy="play,done")
                     | Play
-                button#pause.control(disabled, data-disabledBy="pause,step,reset")
+                button#pause.control(disabled, data-disabledBy="pause,step,reset,done")
                     | Pause
-                button#step.control(data-disabledBy="play")
+                button#step.control(data-disabledBy="play,done")
                     | Step
                 button#reset.control(data-disabledBy="play")
                     | Reset
+                button#done.control.hidden
+                    | Done
             hr
             h2 Statistics
             ul

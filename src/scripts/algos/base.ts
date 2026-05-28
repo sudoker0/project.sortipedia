@@ -11,43 +11,43 @@ export type ActionResult<T> = {
 };
 
 export abstract class SortingAlgorithm {
-    // notice: all operations on data should be done through the protected methods below
-    protected data: number[];
+    // notice: all operations on data must be done through the protected methods below
+    private _data: number[];
     private finished = false;
     private activeGenerator: Generator<Action, void, undefined> | null = null;
 
     constructor(data: readonly number[]) {
-        this.data = [...data];
+        this._data = [...data];
     }
 
-    get readData(): number[] {
-        return [...this.data];
+    get data(): readonly number[] {
+        return [...this._data];
     }
 
     get size(): number {
-        return this.data.length;
+        return this._data.length;
     }
 
     protected swap(i: number, j: number): ActionResult<void> {
-        const temp = this.data[i];
-        this.data[i] = this.data[j];
-        this.data[j] = temp;
+        const temp = this._data[i];
+        this._data[i] = this._data[j];
+        this._data[j] = temp;
         return {
             action: { type: "swap", data: null, idx: i, idx2: j },
             data: null,
         };
     }
 
-    protected writeTo(data: number, idx: number): ActionResult<void> {
-        this.data[idx] = data;
+    protected writeTo(number: number, idx: number): ActionResult<void> {
+        this._data[idx] = number;
         return {
-            action: { type: "write", data: data, idx: idx, idx2: null },
+            action: { type: "write", data: number, idx: idx, idx2: null },
             data: null,
         };
     }
 
     protected readFrom(idx: number): ActionResult<number> {
-        const value = this.data[idx];
+        const value = this._data[idx];
         return {
             action: { type: "read", data: value, idx: idx, idx2: null },
             data: value,
@@ -55,7 +55,7 @@ export abstract class SortingAlgorithm {
     }
 
     protected compare(i: number, j: number): ActionResult<number> {
-        const value = this.data[i] - this.data[j];
+        const value = this._data[i] - this._data[j];
         return {
             action: { type: "compare", data: value, idx: i, idx2: j },
             data: value,

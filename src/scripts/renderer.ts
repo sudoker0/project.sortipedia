@@ -17,7 +17,7 @@ export function clearCanvas() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
-export function drawBlocks(data: number[], actions?: Action[]) {
+export function drawBlocks(data: readonly number[], actions?: Action[]) {
     if (!ctx) return;
     clearCanvas();
     const blockWidth = canvas.width / data.length;

@@ -10,6 +10,8 @@ import { validateAndReturn } from "./ui.js";
 import { MiracleSort } from "./algos/miracle_sort.js";
 import { Introsort } from "./algos/introsort.js";
 import { GnomeSort } from "./algos/gnome_sort.js";
+import { CombSort } from "./algos/comb_sort.js";
+import { RadixSortLSD } from "./algos/radix_sort_lsd.js";
 
 export const config = {
     delay: 0,
@@ -58,6 +60,12 @@ export function updateAlgorithm(algorithmValue: string) {
             break;
         case "heap_sort":
             sorter = new HeapSort(curArray);
+            break;
+        case "comb_sort":
+            sorter = new CombSort(curArray);
+            break;
+        case "radix_sort_lsd":
+            sorter = new RadixSortLSD(curArray);
             break;
         case "bogo_sort":
             sorter = new BogoSort(curArray);

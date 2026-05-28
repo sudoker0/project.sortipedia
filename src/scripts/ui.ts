@@ -22,6 +22,7 @@ export const pauseBtn = document.querySelector("#pause") as HTMLButtonElement;
 export const stopBtn = document.querySelector("#stop") as HTMLButtonElement;
 export const stepBtn = document.querySelector("#step") as HTMLButtonElement;
 export const resetBtn = document.querySelector("#reset") as HTMLButtonElement;
+export const doneBtn = document.querySelector("#done") as HTMLButtonElement;
 export const algorithmSelect = document.querySelector(
     "#algorithm",
 ) as HTMLSelectElement;

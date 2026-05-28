@@ -13,6 +13,7 @@ import {
     clearStats,
     updateDescription,
     state,
+    doneBtn,
 } from "./ui.js";
 import { drawBlocks, initializeCanvasResize } from "./renderer.js";
 import * as sorting from "./sorting.js";
@@ -38,8 +39,8 @@ algorithmSelect.addEventListener("change", () => {
 });
 
 function finish() {
-    pauseBtn.click();
-    drawBlocks(sorting.sorter.readData);
+    doneBtn.click();
+    drawBlocks(sorting.sorter.data);
 }
 
 function reset() {
@@ -89,7 +90,7 @@ function runSort(timestamp: DOMHighResTimeStamp | undefined = undefined) {
             }
         }
         writeStatsToScreen();
-        drawBlocks(sorting.sorter!.readData, batchAction);
+        drawBlocks(sorting.sorter!.data, batchAction);
     }
     if (timestamp != undefined) {
         sorting.setGlobalAnimationFrame(requestAnimationFrame(runSort));
